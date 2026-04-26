@@ -11,17 +11,17 @@ pygame.display.set_caption("Snake – TSIS 4")
 clock = pygame.time.Clock()
 
 # Fonts
-font_big  = pygame.font.SysFont("Consolas", 52, bold=True)
-font_med  = pygame.font.SysFont("Consolas", 26, bold=True)
-font_sm   = pygame.font.SysFont("Consolas", 20)
+font_big = pygame.font.SysFont("Consolas", 52, bold=True)
+font_med = pygame.font.SysFont("Consolas", 26, bold=True)
+font_sm = pygame.font.SysFont("Consolas", 20)
 font_tiny = pygame.font.SysFont("Consolas", 16)
 
 SETTINGS_FILE = "settings.json"
 
 DEFAULT_SETTINGS = {
     "snake_color": [60, 220, 60],
-    "grid":        True,
-    "sound":       False,
+    "grid": True,
+    "sound": False,
 }
 
 def load_settings():
@@ -39,7 +39,6 @@ def save_settings(s):
 
 
 def draw_button(rect, text, active=False):
-    """Draw a rounded button; returns rect for click detection."""
     bg = (55, 120, 220) if active else (50, 50, 70)
     pygame.draw.rect(screen, bg, rect, border_radius=8)
     pygame.draw.rect(screen, (100, 120, 180), rect, 2, border_radius=8)
@@ -55,7 +54,6 @@ def center_text(text, y, font, color=(220, 220, 220)):
 
 
 def screen_username():
-    """Prompt user to enter a name. Returns username string."""
     buf = ""
     while True:
         clock.tick(60)
@@ -84,7 +82,6 @@ def screen_username():
 
 
 def screen_menu(username):
-    """Main menu with Play, Leaderboard, Settings, Quit buttons."""
     BW, BH = 220, 44
     bx = C.W//2 - BW//2
     btns = {
@@ -187,7 +184,6 @@ SNAKE_COLOR_OPTIONS = [
 ]
 
 def screen_settings(settings):
-    """Let user toggle grid, sound and pick snake colour. Returns updated settings."""
     s      = settings.copy()
     b_back = pygame.Rect(C.W//2 - 90, C.H - 60, 180, 38)
     while True:
@@ -246,20 +242,20 @@ def main():
     settings  = load_settings()
     username  = screen_username()
     player_id = db.get_or_create_player(username)
-    best      = db.get_personal_best(player_id)
+    best = db.get_personal_best(player_id)
 
     state = "menu"
 
     while True:
         if state == "menu":
             action = screen_menu(username)
-            state  = action
+            state = action
 
         elif state == "play" or state == "retry":
-            g            = Game(screen, clock, settings, best)
+            g = Game(screen, clock, settings, best)
             score, level = g.run()
             db.save_session(player_id, score, level)
-            best  = max(best, score)
+            best = max(best, score)
             state = screen_gameover(score, level, best)
 
         elif state == "leaderboard":
@@ -268,7 +264,7 @@ def main():
 
         elif state == "settings":
             settings = screen_settings(settings)
-            state    = "menu"
+            state = "menu"
 
 
 if __name__ == "__main__":

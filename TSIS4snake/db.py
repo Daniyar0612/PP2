@@ -5,16 +5,15 @@ except ImportError:
     HAS_PG = False
 
 DB_CONFIG = {
-    "dbname":   "snake_db",
-    "user":     "postgres",
+    "dbname": "snake_db",
+    "user": "postgres",
     "password": "your_password",
-    "host":     "localhost",
-    "port":     5432,
+    "host": "localhost",
+    "port": 5432,
 }
 
 
 def _connect():
-    """Return a new psycopg2 connection or None on failure."""
     if not HAS_PG:
         return None
     try:
@@ -24,7 +23,6 @@ def _connect():
 
 
 def init_db():
-    """Create tables if they don't exist yet."""
     conn = _connect()
     if not conn:
         return
@@ -49,7 +47,6 @@ def init_db():
 
 
 def get_or_create_player(username: str) -> int | None:
-    """Return the player's id, creating a row if needed."""
     conn = _connect()
     if not conn:
         return None
@@ -65,7 +62,6 @@ def get_or_create_player(username: str) -> int | None:
 
 
 def save_session(player_id: int, score: int, level: int):
-    """Insert one game result into game_sessions."""
     if player_id is None:
         return
     conn = _connect()
@@ -81,7 +77,6 @@ def save_session(player_id: int, score: int, level: int):
 
 
 def get_personal_best(player_id: int) -> int:
-    """Return the highest score for this player, or 0."""
     if player_id is None:
         return 0
     conn = _connect()
@@ -99,10 +94,6 @@ def get_personal_best(player_id: int) -> int:
 
 
 def get_leaderboard(limit: int = 10) -> list[tuple]:
-    """
-    Return top `limit` rows: [(rank, username, score, level, date), ...]
-    Returns an empty list if DB is unavailable.
-    """
     conn = _connect()
     if not conn:
         return []

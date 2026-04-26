@@ -5,16 +5,16 @@ import tools
 pygame.init()
  
 # SETTINGS
-W, H     = 960, 660
-PANEL    = 60          
+W, H = 960, 660
+PANEL = 60          
 CANVAS_H = H - PANEL
  
 screen = pygame.display.set_mode((W, H))
 pygame.display.set_caption("Paint – TSIS 2")
-clock  = pygame.time.Clock()
+clock = pygame.time.Clock()
  
 # FONTS
-font_ui  = pygame.font.SysFont("Arial", 12, bold=True)
+font_ui = pygame.font.SysFont("Arial", 12, bold=True)
 font_txt = pygame.font.SysFont("Arial", 20)   
  
 canvas = pygame.Surface((W, CANVAS_H))
@@ -28,8 +28,8 @@ COLORS = [
 ]
  
 # SIZES
-SIZES      = [2, 5, 10]
-SIZE_KEYS  = [K_1, K_2, K_3]
+SIZES = [2, 5, 10]
+SIZE_KEYS = [K_1, K_2, K_3]
 SIZE_NAMES = ["S", "M", "L"]
  
 # TOOLS
@@ -116,16 +116,16 @@ def draw_shape(surface, tool, color, start, end, size):
     elif tool == "rhombus":tools.draw_rhombus(surface, color, start, end, size)
  
  
-color    = (0, 0, 0)
-tool     = "pencil"
+color = (0, 0, 0)
+tool = "pencil"
 size_idx = 0           
-drawing  = False
-start    = None
+drawing = False
+start = None
 last_pos = None
  
 text_active = False    
-text_pos    = None    
-text_buf    = ""       
+text_pos = None    
+text_buf = ""       
  
  
 while True:
@@ -142,12 +142,12 @@ while True:
                     surf = font_txt.render(text_buf, True, color)
                     canvas.blit(surf, text_pos)
                     text_active = False
-                    text_buf    = ""
-                    text_pos    = None
+                    text_buf = ""
+                    text_pos = None
                 elif e.key == K_ESCAPE:
                     text_active = False
-                    text_buf    = ""
-                    text_pos    = None
+                    text_buf = ""
+                    text_pos = None
                 elif e.key == K_BACKSPACE:
                     text_buf = text_buf[:-1]  
                 else:
@@ -171,7 +171,7 @@ while True:
                 canvas.fill((255, 255, 255))
  
             if e.key == K_s and (pygame.key.get_mods() & KMOD_CTRL):
-                ts       = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+                ts = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
                 filename = f"drawing_{ts}.png"
                 pygame.image.save(canvas, filename)
                 pygame.display.set_caption(f"Paint – saved {filename}")
@@ -193,12 +193,12 @@ while True:
  
                 elif tool == "text":
                     text_active = True
-                    text_pos    = (mx, my)
-                    text_buf    = ""
+                    text_pos = (mx, my)
+                    text_buf = ""
  
                 else:
-                    drawing  = True
-                    start    = (mx, my)
+                    drawing = True
+                    start = (mx, my)
                     last_pos = (mx, my)
                     if tool == "pencil":
                         pygame.draw.circle(canvas, color, (mx,my), sz)
@@ -209,8 +209,8 @@ while True:
             if drawing and start and tool in DRAG_TOOLS:
                 end = (e.pos[0], min(e.pos[1], CANVAS_H-1))
                 draw_shape(canvas, tool, color, start, end, sz)
-            drawing  = False
-            start    = None
+            drawing = False
+            start = None
             last_pos = None
  
         if e.type == MOUSEMOTION and drawing:

@@ -6,13 +6,13 @@ import config as C
 
 class Game:
     def __init__(self, screen, clock, settings, personal_best=0):
-        self.screen       = screen
-        self.clock        = clock
-        self.settings     = settings       
-        self.best         = personal_best
+        self.screen = screen
+        self.clock = clock
+        self.settings = settings       
+        self.best = personal_best
 
         # Fonts
-        self.font     = pygame.font.SysFont("Consolas", 20)
+        self.font = pygame.font.SysFont("Consolas", 20)
         self.font_big = pygame.font.SysFont("Consolas", 52, bold=True)
 
     # Helpers
@@ -24,7 +24,6 @@ class Game:
         return c == 0 or c == C.COLS-1 or r == 0 or r == C.ROWS-1
 
     def free_pos(self, occupied):
-        """Random cell not in occupied set."""
         while True:
             c = random.randint(1, C.COLS-2)
             r = random.randint(1, C.ROWS-2)
@@ -118,7 +117,7 @@ class Game:
 
     def level_flash(self, level, snake, foods, poison, powerup,
                     obstacles, score, eaten, effect, shield):
-        """Show LEVEL N! message for 900 ms."""
+        
         self.draw(snake, foods, poison, powerup, obstacles,
                   score, level, eaten, effect, shield)
         msg = self.font_big.render(f"LEVEL  {level}!", True, C.GOLD)
@@ -133,19 +132,19 @@ class Game:
 
 
     def run(self):
-        """Play one game session. Returns (score, level)."""
+        
 
 
-        sx, sy    = C.COLS//2, C.ROWS//2
-        snake     = [(sx, sy), (sx-1, sy), (sx-2, sy)]
-        body      = set(snake)
+        sx, sy = C.COLS//2, C.ROWS//2
+        snake = [(sx, sy), (sx-1, sy), (sx-2, sy)]
+        body = set(snake)
         direction = (1, 0)
-        next_dir  = (1, 0)
+        next_dir = (1, 0)
         score, level, eaten, fps = 0, 1, 0, C.FPS_INIT
 
 
-        ft       = self.pick_food()
-        foods    = [(self.free_pos(body), ft, ft[3], ft[3])]
+        ft = self.pick_food()
+        foods = [(self.free_pos(body), ft, ft[3], ft[3])]
 
 
         poison = None
@@ -157,7 +156,7 @@ class Game:
 
 
         active_effect = None
-        shield_on     = False
+        shield_on = False
 
 
         obstacles: set = set()
@@ -211,7 +210,7 @@ class Game:
 
             hx, hy = snake[0]
             dx, dy = direction
-            head   = (hx+dx, hy+dy)
+            head = (hx+dx, hy+dy)
             nx, ny = head
 
 
@@ -235,14 +234,14 @@ class Game:
                 if head == (fc, fr):
                     score += ftype[0]
                     eaten += 1
-                    grew   = True
-                    nf     = self.pick_food()
-                    occ    = body | obstacles | {f[0] for f in new_foods}
+                    grew = True
+                    nf = self.pick_food()
+                    occ = body | obstacles | {f[0] for f in new_foods}
                     new_foods.append((self.free_pos(occ), nf, nf[3], nf[3]))
                 elif timer - 1 > 0:
                     new_foods.append(((fc, fr), ftype, timer-1, lifetime))
                 else:
-                    nf  = self.pick_food()
+                    nf = self.pick_food()
                     occ = body | obstacles | {f[0] for f in new_foods}
                     new_foods.append((self.free_pos(occ), nf, nf[3], nf[3]))
             foods = new_foods
@@ -259,7 +258,7 @@ class Game:
                     if len(snake) <= 1:
                         return score, level   
                     poison = None
-                    grew   = True             
+                    grew = True             
                 elif ptimer - 1 > 0:
                     poison = ((pc, pr), ptimer-1, plife)
                 else:
@@ -277,13 +276,13 @@ class Game:
                         if old == C.PU_SLOW:  fps += C.SLOW_DELTA
                         
                     if putype == C.PU_SPEED:
-                        fps           += C.SPEED_BOOST_DELTA
+                        fps += C.SPEED_BOOST_DELTA
                         active_effect  = (putype, now + C.PU_EFFECT_MS)
                     elif putype == C.PU_SLOW:
-                        fps           -= C.SLOW_DELTA
+                        fps -= C.SLOW_DELTA
                         active_effect  = (putype, now + C.PU_EFFECT_MS)
                     elif putype == C.PU_SHIELD:
-                        shield_on     = True
+                        shield_on = True
                         active_effect = (putype, now + C.PU_EFFECT_MS)
 
 
@@ -293,9 +292,9 @@ class Game:
 
 
             if eaten >= 3:
-                eaten  = 0
+                eaten = 0
                 level += 1
-                fps   += 0.5   
+                fps += 0.5   
 
 
                 if level >= 3:

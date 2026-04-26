@@ -10,7 +10,6 @@ def draw_line(surface, color, start, end, size):
 
 
 def draw_rect(surface, color, start, end, size):
-    """Axis-aligned rectangle defined by two drag corners."""
     x0, y0 = start
     x1, y1 = end
     rect = (min(x0,x1), min(y0,y1), abs(x1-x0), abs(y1-y0))
@@ -19,26 +18,23 @@ def draw_rect(surface, color, start, end, size):
 
 
 def draw_square(surface, color, start, end, size):
-    """Square: side = shortest axis of drag, anchored at start."""
     x0, y0 = start
     x1, y1 = end
     side = min(abs(x1-x0), abs(y1-y0))
-    sx   = side if x1 >= x0 else -side
-    sy   = side if y1 >= y0 else -side
+    sx = side if x1 >= x0 else -side
+    sy = side if y1 >= y0 else -side
     rect = (min(x0, x0+sx), min(y0, y0+sy), side, side)
     if side > 0:
         pygame.draw.rect(surface, color, rect, size)
 
 
 def draw_circle(surface, color, start, end, size):
-    """Circle: centre = start, radius = drag distance."""
     r = int(math.hypot(end[0]-start[0], end[1]-start[1]))
     if r > 0:
         pygame.draw.circle(surface, color, start, r, size)
 
 
 def draw_right_triangle(surface, color, start, end, size):
-    """Right-angle triangle: right angle at start corner."""
     x0, y0 = start
     x1, y1 = end
     pts = [(x0, y0), (x1, y0), (x0, y1)]
@@ -46,23 +42,21 @@ def draw_right_triangle(surface, color, start, end, size):
 
 
 def draw_equilateral_triangle(surface, color, start, end, size):
-    """Equilateral triangle: base = drag line, apex above midpoint."""
     x0, y0 = start
     x1, y1 = end
     base = math.hypot(x1-x0, y1-y0)
     if base < 1:
         return
-    h    = (math.sqrt(3) / 2) * base
+    h = (math.sqrt(3) / 2) * base
     dx, dy = (x1-x0)/base, (y1-y0)/base
     nx, ny = -dy, dx
     mx, my = (x0+x1)/2, (y0+y1)/2         
-    apex   = (mx + nx*h, my + ny*h)
-    pts    = [(x0, y0), (x1, y1), apex]
+    apex = (mx + nx*h, my + ny*h)
+    pts = [(x0, y0), (x1, y1), apex]
     pygame.draw.polygon(surface, color, pts, size)
 
 
 def draw_rhombus(surface, color, start, end, size):
-    """Rhombus: diagonals aligned to bounding box axes."""
     x0, y0 = start
     x1, y1 = end
     mx, my = (x0+x1)//2, (y0+y1)//2
@@ -70,19 +64,15 @@ def draw_rhombus(surface, color, start, end, size):
     pygame.draw.polygon(surface, color, pts, size)
 
 def flood_fill(surface, pos, new_color):
-    """
-    BFS flood-fill starting at pixel 'pos'.
-    Replaces all connected pixels of the same original color with new_color.
-    Uses pygame.Surface.get_at / set_at – no extra libraries.
-    """
-    x, y       = int(pos[0]), int(pos[1])
-    w, h       = surface.get_size()
+    
+    x, y = int(pos[0]), int(pos[1])
+    w, h = surface.get_size()
 
     target = surface.get_at((x, y))[:3] 
     if target == new_color[:3]:
         return
 
-    queue   = deque()
+    queue = deque()
     queue.append((x, y))
     visited = set()
     visited.add((x, y))
