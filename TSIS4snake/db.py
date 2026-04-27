@@ -4,7 +4,11 @@ try:
 except ImportError:
     HAS_PG = False
 
-DB_CONFIG = {"dbname": "snake_db", "user": "postgres", "password": "your_password", "host": "localhost", "port": 5432}
+DB_CONFIG = {"dbname": "snake_db", 
+             "user": "postgres", 
+             "password": "1234", 
+             "host": "localhost", 
+             "port": 5432}
 
 def _connect():
     if not HAS_PG: return None

@@ -3,5 +3,5 @@ def get_db_config():
         "host": "localhost",
         "database": "phonebook_db",
         "user": "postgres",
-        "password": "yourpassword"
+        "password": "1234"
     }
