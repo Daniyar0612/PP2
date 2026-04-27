@@ -1,54 +1,47 @@
-
-CELL = 20     
-COLS = 25      
-ROWS = 25    
-HUD_H = 50     
+CELL = 30
+COLS = 20
+ROWS = 18
+HUD_H = 60
 W = COLS * CELL
 H = ROWS * CELL + HUD_H
-FPS_INIT = 8     
+FPS_INIT = 8
 
-
-BG = (15,  24,  36)
-WALL_C = (80,  95, 120)
-GRID_C = (25,  35,  50)
-HUD_C = (10,  16,  26)
-TEXT_C = (220, 220, 220)
-GOLD = (255, 200,   0)
-
+OUTER_BG = (100, 180, 255)
+GAME_FIELD_BG = (25, 25, 35)
+WALL_C = (10, 10, 15)
+GRID_C = (45, 45, 60)
+HUD_C = (40, 60, 100)
+TEXT_C = (255, 255, 255)
+GOLD = (255, 215, 0)
 
 FOOD_TYPES = [
-    (10, (220,  55,  55), "+10", 40),   
-    (20, ( 80, 180, 255), "+20", 25),   
-    (30, (255, 200,   0), "+30", 15),   
+    (10, (220, 40, 40), "+10", 40),
+    (20, (40, 120, 220), "+20", 25),
+    (30, (200, 160, 0), "+30", 15),
 ]
 FOOD_WEIGHTS = [60, 30, 10]
 
-
-POISON_COLOR = (120,   0,   0)
-POISON_LABEL = "☠"
-POISON_SHORTEN = 2     
-POISON_LIFETIME = 30    
-
+POISON_COLOR = (130, 0, 0)
+POISON_LABEL = "X"
+POISON_SHORTEN = 2
+POISON_LIFETIME = 30
 
 PU_SPEED  = "speed"
 PU_SLOW   = "slow"
 PU_SHIELD = "shield"
 
 PU_COLORS = {
-    PU_SPEED:  (50,  220, 255),
-    PU_SLOW:   (200,  80, 255),
-    PU_SHIELD: (255, 200,  50),
+    PU_SPEED:  (0, 255, 255),
+    PU_SLOW:   (200, 80, 255),
+    PU_SHIELD: (255, 140, 0),
 }
-PU_LABELS = {PU_SPEED: "⚡", PU_SLOW: "🐢", PU_SHIELD: "🛡"}
+PU_LABELS = {PU_SPEED: "SPD", PU_SLOW: "SLW", PU_SHIELD: "SHD"}
 
-PU_FIELD_MS = 8000   
-PU_EFFECT_MS = 5000   
-PU_SPAWN_INTERVAL = 6000   
-
+PU_FIELD_MS = 8000
+PU_EFFECT_MS = 5000
+PU_SPAWN_INTERVAL = 6000
 
 SPEED_BOOST_DELTA = 3
 SLOW_DELTA = 3
 
-
-OBSTACLE_COLOR = (140, 100,  60)   
-OBSTACLES_PER_LVL = 4                 
+OBSTACLE_COLOR = (100, 100, 120)

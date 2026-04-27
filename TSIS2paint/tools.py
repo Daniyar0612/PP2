@@ -5,7 +5,7 @@ from collections import deque
 
 
 def draw_line(surface, color, start, end, size):
-    """Straight line from start to end."""
+    
     pygame.draw.line(surface, color, start, end, size)
 
 

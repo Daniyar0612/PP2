@@ -74,7 +74,6 @@ swatches, tool_btns, size_btns = build_ui()
  
  
 def draw_panel(color, tool, size_idx):
-    """Render the bottom toolbar."""
     pygame.draw.rect(screen, (38, 38, 38), (0, CANVAS_H, W, PANEL))
     pygame.draw.line(screen, (80,80,80), (0, CANVAS_H), (W, CANVAS_H), 1)
  
@@ -106,7 +105,6 @@ def draw_panel(color, tool, size_idx):
  
  
 def draw_shape(surface, tool, color, start, end, size):
-    """Call the correct tools.py function for the active tool."""
     if tool == "line":    tools.draw_line(surface, color, start, end, size)
     elif tool == "rect":  tools.draw_rect(surface, color, start, end, size)
     elif tool == "square":tools.draw_square(surface, color, start, end, size)
